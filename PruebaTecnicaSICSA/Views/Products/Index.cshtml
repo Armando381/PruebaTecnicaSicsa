@@ -1,1 +1,47 @@
-﻿
+﻿@using PruebaTecnicaSICSA.Models;
+ 
+
+@if (String.IsNullOrEmpty(ViewBag.Message as string) && String.IsNullOrEmpty(ViewBag.TypeMessage as string))
+{
+    <div class=ViewBag.TypeMessage as string>ViewBag.Message as string</div>
+}
+
+<div class=""></div>
+<div class="row">
+    <table class="table-responsive">
+        <thead>
+            <tr>
+                <th style="display:none"></th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Categoria</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Products as List<product>)
+            {
+                <tr>
+                    <td style="display:none">
+                        @item.ProductId
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Description
+                    </td>
+                    <td >
+                    
+                        @item.category.Name
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar","Edit",routeValues:new {@item.ProductId},htmlAttributes: new {Class="btn btn-primary"});
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+

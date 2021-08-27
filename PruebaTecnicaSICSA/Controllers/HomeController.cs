@@ -15,7 +15,7 @@ namespace PruebaTecnicaSICSA.Controllers
 
         public ActionResult Index()
         {
-           //ViewBag.Categories = dbContext.categories.ToList();
+         
             return View();
         }
 

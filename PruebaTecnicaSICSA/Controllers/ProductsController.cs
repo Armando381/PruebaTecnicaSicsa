@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PruebaTecnicaSICSA.Models;
 
 namespace PruebaTecnicaSICSA.Controllers
 {
     public class ProductsController : Controller
     {
-        // GET: Products
-        public ActionResult Index()
+        private PruebaSicsaEntities1 dbContext = new PruebaSicsaEntities1();
+        // GET: products
+        public ActionResult Index(string Message, string typeMessage)
         {
-            return View();
-        }
+            ViewBag.Message = Message;
+            ViewBag.TypeMessage = typeMessage;
+            ViewBag.Categories = dbContext.products.ToList();
 
-        // GET: Products/Details/5
-        public ActionResult Details(int id)
-        {
             return View();
         }
+        // GET: Products/Details/5
+ 
 
         // GET: Products/Create
         public ActionResult Create()

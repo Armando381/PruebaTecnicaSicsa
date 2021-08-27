@@ -1,1 +1,53 @@
-﻿
+﻿@using PruebaTecnicaSICSA.Models;
+
+
+@if (String.IsNullOrEmpty(ViewBag.Message as string) && String.IsNullOrEmpty(ViewBag.TypeMessage as string))
+{
+    <div class=ViewBag.TypeMessage as string>@ViewBag.Message</div>
+}
+<br />
+
+@Html.ActionLink("Nueva Categoria", "Create", "Categories", htmlAttributes: new {Class= "btn btn-info class='glyphicon-plus'></span>" })
+
+<div class="card shadow mb-4" >
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th style="display:none"></th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Opciones</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.Categories as List<category>)
+                    {
+                        <tr>
+                            <td style="display:none">
+                                @item.CategoryId
+                            </td>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                @item.Description
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", routeValues: new { @item.CategoryId }, htmlAttributes: new { Class = "btn btn-primary" })
+                                <button class="btn btn-warning">Eliminar</button>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
