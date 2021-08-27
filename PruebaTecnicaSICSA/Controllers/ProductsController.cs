@@ -20,72 +20,94 @@ namespace PruebaTecnicaSICSA.Controllers
             return View();
         }
         // GET: Products/Details/5
- 
+
 
         // GET: Products/Create
         public ActionResult Create()
         {
-            return View();
+            product product = new product();
+
+            ViewData["CategoryId"] = dbContext.categories.Select(x => new SelectListItem() { Value = x.CategoryId.ToString(), Text = x.Name });
+            return PartialView("_Create", product);
         }
 
         // POST: Products/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(product product)
         {
             try
             {
-                // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                dbContext.products.Add(product);
+
+                if (dbContext.SaveChanges() == 1)
+                    return RedirectToAction("Index", routeValues: new { Message = "La información se guardo correctamente.", typeMessage = "alert alert-success" });
+                else
+                    return RedirectToAction("Index", routeValues: new { Message = "Error al guardar informacion.", typeMessage = "alert alert-warning" });
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return RedirectToAction("Index", routeValues: new { Message = ex.Message, typeMessage = "alert alert-danger" });
             }
         }
 
         // GET: Products/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            product products = dbContext.products.Where(x => x.ProductId == id).FirstOrDefault();
+
+            return PartialView("_Edit", products);
         }
 
         // POST: Products/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(product product)
         {
             try
             {
-                // TODO: Add update logic here
 
-                return RedirectToAction("Index");
+                dbContext.Entry(product).State = System.Data.Entity.EntityState.Modified;
+
+
+                if (dbContext.SaveChanges() == 1)
+                    return RedirectToAction("Index", routeValues: new { Message = "La información se guardo correctamente.", typeMessage = "alert alert-success" });
+                else
+                    return RedirectToAction("Index", routeValues: new { Message = "Error al guardar informacion.", typeMessage = "alert alert-warning" });
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return RedirectToAction("Index", routeValues: new { Message = ex.Message, typeMessage = "alert alert-danger" });
             }
         }
 
         // GET: Products/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult getDelete(int id)
         {
-            return View();
+            product product = dbContext.products.Where(x => x.ProductId == id).FirstOrDefault();
+            return RedirectToAction("Delete", routeValues: new { product = product });
         }
 
         // POST: Products/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(product product)
         {
+
             try
             {
-                // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
+                dbContext.Entry(product).State = System.Data.Entity.EntityState.Modified;
+
+                if (dbContext.SaveChanges() == 1)
+                    return RedirectToAction("Index", routeValues: new { Message = "La información se guardo correctamente.", typeMessage = "alert alert-success" });
+                else
+                    return RedirectToAction("Index", routeValues: new { Message = "Error al guardar informacion.", typeMessage = "alert alert-warning" });
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return RedirectToAction("Index", routeValues: new { Message = ex.Message, typeMessage = "alert alert-danger" });
             }
+
+
         }
     }
 }

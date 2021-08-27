@@ -1,15 +1,23 @@
 ﻿@using PruebaTecnicaSICSA.Models;
 
+<div id="MyModal"></div>
 
-@if (String.IsNullOrEmpty(ViewBag.Message as string) && String.IsNullOrEmpty(ViewBag.TypeMessage as string))
+@if (!String.IsNullOrEmpty(ViewBag.Message as string) && !String.IsNullOrEmpty(ViewBag.TypeMessage as string))
 {
-    <div class=ViewBag.TypeMessage as string>@ViewBag.Message</div>
+    <br />
+    <div class="@ViewBag.TypeMessage" role="alert">
+        <strong>@ViewBag.Message</strong>
+        <button type="button" class="alert-dismissable fade show close" data-dismiss="alert">&times;</button>
+    </div>
+    <div style="display:none" role="alert">
+
+    </div>
 }
 <br />
 
-@Html.ActionLink("Nueva Categoria", "Create", "Categories", htmlAttributes: new {Class= "btn btn-info class='glyphicon-plus'></span>" })
+@Html.ActionLink("Nueva Categoria", "Create", "Categories", htmlAttributes: new { Class = "btn btn-info class='glyphicon-plus'></span>", Style = "padding" })
 
-<div class="card shadow mb-4" >
+<div class="card shadow mb-4">
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" cellspacing="0" width="100%">
@@ -37,8 +45,9 @@
                             </td>
 
                             <td>
-                                @Html.ActionLink("Editar", "Edit", routeValues: new { @item.CategoryId }, htmlAttributes: new { Class = "btn btn-primary" })
-                                <button class="btn btn-warning">Eliminar</button>
+                                @Html.ActionLink(" Editar", "Edit", routeValues: new { id = @item.CategoryId }, htmlAttributes: new { Class = "btn btn-primary glyphicon glyphicon-pencil" })
+                                @*@Html.ActionLink(" Eliminar", "Delete", routeValues: new {id=@item.CategoryId }, htmlAttributes: new {id="delete", Class = "btn btn-danger glyphicon glyphicon-trash" })*@
+                                <button type="button" id="delete" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Eliminar</button>
                             </td>
                         </tr>
                     }
@@ -50,4 +59,24 @@
     </div>
 
 </div>
+<script type="text/javascript">
 
+
+    $(document).ready(function () {
+      $('#delete').click(function (event) {
+
+          let id = $(this).closest("tr").find("td").eq(0).html();
+
+          let flag = confirm("¿Desea eliminar el registro?")
+          if (flag) {
+
+          location.href= "@Url.Action("getDelete")"+"?id="+id
+          }
+
+
+
+
+
+        });
+    });
+</script>

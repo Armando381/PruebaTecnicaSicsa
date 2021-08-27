@@ -16,109 +16,112 @@ namespace PruebaTecnicaSICSA.Controllers
         public ActionResult Index(string Message, string typeMessage)
         {
             ViewBag.Message = Message;
-            ViewBag.TypeMessage = typeMessage; 
-            ViewBag.Categories = dbContext.categories.ToList(); 
-            
+            ViewBag.TypeMessage = typeMessage;
+            ViewBag.Categories = dbContext.categories.ToList();
+
             return View();
         }
 
         // GET: Categories/Details/5
-       
+
 
         // GET: Categories/Create
         public ActionResult Create()
         {
-
-            return PartialView("_create");
+            category category = new category();
+            return PartialView("_create", category);
         }
 
         // POST: Categories/Create
-        [HttpPost]
-        public ActionResult Create(string CategoryName, string Description)
+
+        public ActionResult Create(category category)
         {
             try
             {
-                category cat = new category();
-                cat.Description = Description;
-                cat.Name = CategoryName;
 
-                dbContext.categories.Add(cat);
+
+                dbContext.categories.Add(category);
 
                 if (dbContext.SaveChanges() == 1)
-                    return RedirectToAction("Index", routeValues:new { Message="La información se guardo correctamente", typeMessage="success" }) ;
+                    return RedirectToAction("Index", routeValues: new { Message = "La información se guardo correctamente.", typeMessage = "alert alert-success" });
                 else
-                    throw new ApplicationException("Error al guardar informacion;");
+                    return RedirectToAction("Index", routeValues: new { Message = "Error al guardar informacion.", typeMessage = "alert alert-warning" });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw ;
+                return RedirectToAction("Index", routeValues: new { Message = ex.Message, typeMessage = "alert alert-danger" });
             }
         }
 
         // GET: Categories/Edit/5
         public ActionResult Edit(int id)
         {
-            ViewBag.CatId = id;
-            return View();
+            category category = dbContext.categories.Where(x => x.CategoryId == id).FirstOrDefault();
+            return PartialView("_Edit", category);
         }
 
         // POST: Categories/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, string Name, string description)
+
+        public ActionResult Edit(category category)
         {
             try
             {
-                category cat = dbContext.categories.Where(x => x.CategoryId == id).FirstOrDefault();
-                if (cat!=null)
+
+                if (category != null)
                 {
-                    cat.Description = description;
-                    cat.Name = Name;
-                    dbContext.Entry(cat).State = System.Data.Entity.EntityState.Modified;
+
+                    dbContext.Entry(category).State = System.Data.Entity.EntityState.Modified;
                     if (dbContext.SaveChanges() == 1)
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", routeValues: new { Message = "La información se guardo correctamente.", typeMessage = "alert alert-success" });
                     else
-                        throw new ApplicationException("Error al guardar informacion;");
+                        return RedirectToAction("Index", routeValues: new { Message = "Error al guardar informacion.", typeMessage = "alert alert-warning" });
                 }
                 else
                 {
-                    throw new ApplicationException("No encontró el producto");
+                    return RedirectToAction("Index", routeValues: new { Message = "No encontró el producto.", typeMessage = "alert alert-warning" });
+
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw;
+                return RedirectToAction("Index", routeValues: new { Message = ex.Message, typeMessage = "alert alert-danger" });
             }
         }
 
         // GET: Categories/Delete/5
-        public ActionResult GetDelete(int id)
+        public ActionResult getDelete(int id)
         {
-           bool hasProducts = dbContext.products.Any(x => x.CategoryId == id);
-            if (hasProducts)
-                return View();
+            bool hasProducts = dbContext.products.Any(x => x.CategoryId == id);
+            if (!hasProducts)
+            {
+                category category = dbContext.categories.Where(x => x.CategoryId == id).FirstOrDefault();
+                return RedirectToAction("Delete", routeValues: new { category = category });
+            }
+
             else
-                throw new ApplicationException("No se puede realizar la operacion.");
+                return RedirectToAction("Index", routeValues: new { Message = "No se puede realizar la operacion.", typeMessage = "alert alert-warning" });
+
         }
 
         // POST: Categories/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id)
+
+        public ActionResult Delete(category category)
         {
             try
             {
-                category cat = dbContext.categories.Where(x => x.CategoryId == id).FirstOrDefault();
-                dbContext.Entry(cat).State = System.Data.Entity.EntityState.Deleted;
+
+                dbContext.Entry(category).State = System.Data.Entity.EntityState.Deleted;
                 dbContext.SaveChanges();
 
                 if (dbContext.SaveChanges() == 1)
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", routeValues: new { Message = "La información se guardo correctamente.", typeMessage = "alert alert-success" });
                 else
-                    throw new ApplicationException("Error al guardar informacion;");
+                    return RedirectToAction("Index", routeValues: new { Message = "Error al guardar informacion.", typeMessage = "alert alert-warning" });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw;
+                return RedirectToAction("Index", routeValues: new { Message = ex.Message, typeMessage = "alert alert-danger" });
             }
         }
     }
