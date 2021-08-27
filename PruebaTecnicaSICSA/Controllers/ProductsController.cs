@@ -91,9 +91,9 @@ namespace PruebaTecnicaSICSA.Controllers
             try
             {
                 product product = dbContext.products.Where(x => x.ProductId == id).FirstOrDefault();
-                dbContext.Entry(product).State = System.Data.Entity.EntityState.Modified;
+                dbContext.Entry(product).State = System.Data.Entity.EntityState.Deleted;
 
-                if (dbContext.SaveChanges() == 0)
+                if (dbContext.SaveChanges() == 1)
                     return RedirectToAction("Index", routeValues: new { Message = "La información se elimino correctamente.", typeMessage = "alert alert-success" });
                 else
                     return RedirectToAction("Index", routeValues: new { Message = "Error al borrar informacion.", typeMessage = "alert alert-warning" });
