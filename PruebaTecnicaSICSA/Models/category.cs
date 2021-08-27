@@ -6,7 +6,7 @@
 //     Los cambios manuales en este archivo se sobrescribirán si se regenera el código.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System.ComponentModel.DataAnnotations;
 namespace PruebaTecnicaSICSA.Models
 {
     using System;
@@ -21,6 +21,7 @@ namespace PruebaTecnicaSICSA.Models
         }
     
         public int CategoryId { get; set; }
+        [Required(ErrorMessage = "El campo es requerido")]
         public string Name { get; set; }
         public string Description { get; set; }
     

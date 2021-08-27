@@ -6,7 +6,7 @@
 //     Los cambios manuales en este archivo se sobrescribirán si se regenera el código.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System.ComponentModel.DataAnnotations;
 namespace PruebaTecnicaSICSA.Models
 {
     using System;
@@ -15,8 +15,11 @@ namespace PruebaTecnicaSICSA.Models
     public partial class product
     {
         public int ProductId { get; set; }
+        [Required(ErrorMessage ="El campo es requerido")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "El campo es requerido")]
         public string Description { get; set; }
+        [Required(ErrorMessage = "El campo es requerido")]
         public int CategoryId { get; set; }
     
         public virtual category category { get; set; }

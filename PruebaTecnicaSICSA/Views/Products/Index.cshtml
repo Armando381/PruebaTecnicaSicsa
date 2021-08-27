@@ -1,6 +1,6 @@
 ﻿@using PruebaTecnicaSICSA.Models;
 
-<div id="MyModal"></div>
+
 
 @if (!String.IsNullOrEmpty(ViewBag.Message as string) && !String.IsNullOrEmpty(ViewBag.TypeMessage as string))
 {
@@ -12,7 +12,7 @@
 }
 <br />
 
-@Html.ActionLink("Nueva Categoria", "Create", "Categories", htmlAttributes: new { Class = "btn btn-info class='glyphicon-plus'></span>", Style = "padding" })
+@Html.ActionLink("Nuevo Producto", "Create", "Products", htmlAttributes: new { Class = "btn btn-info class='glyphicon-plus'></span>", Style = "padding" })
 
 
 <div class="card shadow mb-4">
@@ -48,9 +48,9 @@
                                     @item.category.Name
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Editar", "Edit", routeValues: new { @item.ProductId }, htmlAttributes: new { Class = "btn btn-primary<span class='glyphicon glyphicon-pencil'></span>" })
+                                    @Html.ActionLink("Editar", "getEdit", routeValues: new {id= @item.ProductId }, htmlAttributes: new { Class = "btn btn-primary" })
                                     @*@Html.ActionLink("Eliminar", "Delete", routeValues: new { @item.ProductId }, htmlAttributes: new { Class = "btn btn-danger<span class='glyphicon glyphicon-trash'></span>" })*@
-                                    <button type="button" id="delete" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Eliminar</button>
+                                    <button type="button" id="delete" class="btn btn-danger">Eliminar</button>
                                 </td>
                             </tr>
                         }
@@ -67,14 +67,14 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-         $('#delete').click(function (event) {
+        $('.btn-danger').click(function (event) {
 
           let id = $(this).closest("tr").find("td").eq(0).html();
 
           let flag = confirm("¿Desea eliminar el registro?")
           if (flag) {
 
-          location.href= "@Url.Action("getDelete")"+"?id="+id
+          location.href= "@Url.Action("Delete")"+"?id="+id
           }
 
 

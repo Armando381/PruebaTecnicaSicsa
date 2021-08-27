@@ -1,6 +1,5 @@
 ﻿@using PruebaTecnicaSICSA.Models;
 
-<div id="MyModal"></div>
 
 @if (!String.IsNullOrEmpty(ViewBag.Message as string) && !String.IsNullOrEmpty(ViewBag.TypeMessage as string))
 {
@@ -15,7 +14,7 @@
 }
 <br />
 
-@Html.ActionLink("Nueva Categoria", "Create", "Categories", htmlAttributes: new { Class = "btn btn-info class='glyphicon-plus'></span>", Style = "padding" })
+@Html.ActionLink("Nueva Categoria", "getCreate", "Categories", htmlAttributes: new { Class = "btn btn-info class='glyphicon-plus'></span>", Style = "padding" })
 
 <div class="card shadow mb-4">
     <div class="card-body">
@@ -45,9 +44,9 @@
                             </td>
 
                             <td>
-                                @Html.ActionLink(" Editar", "Edit", routeValues: new { id = @item.CategoryId }, htmlAttributes: new { Class = "btn btn-primary glyphicon glyphicon-pencil" })
+                                @Html.ActionLink("Editar", "GetEdit", routeValues: new { id = @item.CategoryId }, htmlAttributes: new { Class = "btn btn-primary" })
                                 @*@Html.ActionLink(" Eliminar", "Delete", routeValues: new {id=@item.CategoryId }, htmlAttributes: new {id="delete", Class = "btn btn-danger glyphicon glyphicon-trash" })*@
-                                <button type="button" id="delete" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Eliminar</button>
+                                <button type="button" id="delete" class="btn btn-danger">Eliminar</button>
                             </td>
                         </tr>
                     }
@@ -63,14 +62,14 @@
 
 
     $(document).ready(function () {
-      $('#delete').click(function (event) {
+        $('.btn-danger').click(function (event) {
 
           let id = $(this).closest("tr").find("td").eq(0).html();
 
           let flag = confirm("¿Desea eliminar el registro?")
           if (flag) {
 
-          location.href= "@Url.Action("getDelete")"+"?id="+id
+          location.href= "@Url.Action("Delete")"+"?id="+id
           }
 
 

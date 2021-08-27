@@ -261,11 +261,11 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\Categories\_create.cshtml" />
-    <Content Include="Views\Categories\_Edit.cshtml" />
-    <Content Include="Views\Products\_Create.cshtml" />
-    <Content Include="Views\Products\_Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Categories\_create.cshtml" />
+    <Content Include="Views\Products\_create.cshtml" />
+    <Content Include="Views\Products\_Edit.cshtml" />
+    <Content Include="Views\Categories\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
